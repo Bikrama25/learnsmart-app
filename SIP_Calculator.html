@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SIP Calculator - Calculate your Systematic Investment Plan returns with ease. Supports daily, monthly, quarterly, yearly, and lump-sum investments.">
+  <meta name="keywords" content="SIP Calculator, Investment Calculator, SIP Returns, Lump Sum Investment">
+  <meta name="author" content="Your Name">
+  <title>SIP Calculator - Calculate Your Investment Returns</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9f5ff;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .ads {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .ads ins {
+      display: block;
+      margin: 0 auto;
+    }
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SIP Calculator</h1>
+    <label for="investmentType">Investment Type:</label>
+    <select id="investmentType">
+      <option value="daily">Daily</option>
+      <option value="monthly">Monthly</option>
+      <option value="quarterly">Quarterly</option>
+      <option value="yearly">Yearly</option>
+      <option value="lumpSum">One-Time Lump Sum</option>
+    </select>
+
+    <label for="amount">Investment Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <label for="duration">Investment Duration (in years):</label>
+    <input type="number" id="duration" placeholder="Enter duration">
+
+    <label for="rate">Expected Annual Return (%):</label>
+    <input type="number" id="rate" placeholder="Enter expected return">
+
+    <button onclick="calculateSIP()">Calculate</button>
+
+    <div class="result" id="result">
+      <p>Total Amount Invested: <span id="totalInvested"></span></p>
+      <p>Estimated Returns: <span id="estimatedReturns"></span></p>
+      <p>Total Value: <span id="totalValue"></span></p>
+    </div>
+
+    <!-- AdSense Ad Unit -->
+    <div class="ads">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-app-pub-1009634249665107/2155691368"
+           data-ad-slot="YOUR_AD_SLOT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2023 SIP Calculator. All rights reserved.
+  </footer>
+
+  <script>
+    function calculateSIP() {
+      const investmentType = document.getElementById('investmentType').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const duration = parseFloat(document.getElementById('duration').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+
+      if (isNaN(amount) || isNaN(duration) || isNaN(rate)) {
+        alert("Please enter valid values.");
+        return;
+      }
+
+      let totalInvested = 0;
+      let totalValue = 0;
+
+      if (investmentType === 'lumpSum') {
+        // Lump-sum investment (compound interest formula)
+        totalInvested = amount;
+        totalValue = amount * Math.pow(1 + rate / 100, duration);
+      } else {
+        // SIP investment (future value of a series formula)
+        let n = 0; // Number of compounding periods per year
+        switch (investmentType) {
+          case 'daily':
+            n = 365;
+            break;
+          case 'monthly':
+            n = 12;
+            break;
+          case 'quarterly':
+            n = 4;
+            break;
+          case 'yearly':
+            n = 1;
+            break;
+          default:
+            alert("Invalid investment type.");
+            return;
+        }
+        const totalPayments = n * duration;
+        const ratePerPeriod = rate / n / 100;
+        totalInvested = amount * totalPayments;
+        totalValue = amount * ((Math.pow(1 + ratePerPeriod, totalPayments) - 1) / ratePerPeriod) * (1 + ratePerPeriod);
+      }
+
+      const estimatedReturns = totalValue - totalInvested;
+
+      document.getElementById('totalInvested').textContent = `₹${totalInvested.toFixed(2)}`;
+      document.getElementById('estimatedReturns').textContent = `₹${estimatedReturns.toFixed(2)}`;
+      document.getElementById('totalValue').textContent = `₹${totalValue.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>

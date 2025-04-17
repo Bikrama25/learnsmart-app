@@ -10,30 +10,48 @@ const firebaseConfig = {
   measurementId: "G-7B4RP63MN6"
 };
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Simple login
+// Render auth form
 document.getElementById('auth-container').innerHTML = `
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+  <div class="auth-box">
+    <input type="email" id="email" placeholder="Email" class="auth-input">
+    <input type="password" id="password" placeholder="Password" class="auth-input">
+    <button onclick="login()" class="auth-button">Login</button>
+    <button onclick="signup()" class="auth-button">Sign Up</button>
+  </div>
 `;
 
+// Login function
 function login() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   
-  firebase.auth().signInWithEmailAndPassword(email, password)
+  auth.signInWithEmailAndPassword(email, password)
     .then(() => loadContent())
-    .catch(err => alert("Error: " + err.message));
+    .catch(err => alert("Login failed: " + err.message));
 }
 
+// Load content after login
 function loadContent() {
-  db.collection("topics").get().then((querySnapshot) => {
-    let html = "<h2>Topics</h2><ul>";
-    querySnapshot.forEach((doc) => {
+  document.getElementById('auth-container').style.display = 'none';
+  
+  db.collection("topics").get().then((snapshot) => {
+    let html = "<h2>Your Topics</h2><ul>";
+    snapshot.forEach(doc => {
       html += `<li>${doc.data().title}</li>`;
     });
     document.getElementById('content').innerHTML = html + "</ul>";
   });
+}
+
+// Signup function (optional)
+function signup() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => alert("Account created!"))
+    .catch(err => alert("Signup failed: " + err.message));
 }

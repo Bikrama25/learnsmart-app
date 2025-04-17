@@ -3,23 +3,21 @@
 <head>
   <title>LearnSmart JEE/NEET</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Load Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-  <script src="app.js"></script>
 </head>
 <body>
   <div id="app">
     <h1>Welcome to LearnSmart!</h1>
+    <!-- Auth form will appear here -->
     <div id="auth-container"></div>
+    <!-- Content will load here -->
     <div id="content"></div>
   </div>
-            <!-- SIP Calculator -->
-            <div class="Calculator">
-                <a href="SIP_Calculator.html">
-                    <img src="https://cdn-icons-png.flaticon.com/128/7551/7551506.png" alt="Age Calculator">
-                    <h3>SIP Calculator</h3>
-                    <p> interactively calculates SIP.</p>
-                </a>
-            </div>
+
+  <!-- Load app.js AFTER Firebase SDK -->
+  <script src="app.js"></script>
 </body>
 </html>

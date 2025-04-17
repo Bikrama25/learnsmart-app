@@ -1,3 +1,40 @@
-body { font-family: Arial; max-width: 800px; margin: 0 auto; }
-#auth-container { margin: 20px 0; }
-input, button { padding: 8px; margin: 5px; }
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.auth-box {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.auth-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-button {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background: #3367d6;
+}
+
+#content {
+  margin-top: 30px;
+}
